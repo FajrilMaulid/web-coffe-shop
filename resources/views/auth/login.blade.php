@@ -69,12 +69,6 @@
                 </button>
             </form>
 
-            <div class="login-info">
-                <h6>🔑 Akun Demo:</h6>
-                <p><strong>Owner:</strong> <code>owner@coffeshop.com</code> / <code>password</code></p>
-                <p><strong>Pegawai:</strong> <code>pegawai@coffeshop.com</code> / <code>password</code></p>
-            </div>
-
             <div class="login-footer">
                 <p>&copy; {{ date('Y') }} Coffee Shop Admin System</p>
             </div>
