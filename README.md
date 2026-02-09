@@ -1,4 +1,4 @@
-# ☕ Coffee Shop Admin System
+# ☕ Sistem Administrasi Coffee Shop
 
 Sistem administrasi modern untuk pengelolaan coffee shop yang dibangun dengan Laravel 12. Aplikasi ini menyediakan antarmuka yang intuitif untuk mengelola produk, transaksi, kategori, dan pegawai dengan sistem role-based access control.
 
@@ -8,10 +8,10 @@ Sistem administrasi modern untuk pengelolaan coffee shop yang dibangun dengan La
 
 - **Statistik Real-time**: Penjualan harian, mingguan, dan bulanan
 - **Grafik Penjualan**: Visualisasi data 7 hari terakhir
-- **Product Tracking**: Monitor produk terlaris
-- **Stok Alert**: Notifikasi produk dengan stok menipis
+- **Pelacakan Produk**: Monitor produk terlaris
+- **Peringatan Stok**: Notifikasi produk dengan stok menipis
 
-### 👥 Role-Based Access Control
+### 👥 Kontrol Akses Berbasis Role
 
 - **Owner**: Akses penuh ke semua fitur
     - CRUD produk, kategori, dan pegawai
@@ -33,52 +33,52 @@ Sistem administrasi modern untuk pengelolaan coffee shop yang dibangun dengan La
 
 ### 💰 Manajemen Transaksi
 
-- Point of Sale (POS) interface
+- Antarmuka Point of Sale (POS)
 - Keranjang belanja interaktif
 - Export transaksi ke Excel
 - Riwayat transaksi lengkap
 - Filter berdasarkan tanggal
 
-### 🏷️ Manajemen Kategori (Owner Only)
+### 🏷️ Manajemen Kategori (Khusus Owner)
 
 - CRUD kategori produk
 - Deskripsi detail kategori
 
-### 👨‍💼 Manajemen Pegawai (Owner Only)
+### 👨‍💼 Manajemen Pegawai (Khusus Owner)
 
 - Tambah/edit/hapus pegawai
 - Informasi kontak lengkap
 - Manajemen role
 
-## 🛠️ Tech Stack
+## 🛠️ Teknologi yang Digunakan
 
 ### Backend
 
 - **Laravel 12** - PHP Framework
 - **PHP 8.2+** - Server-side scripting
-- **MySQL** - Database management
+- **MySQL** - Manajemen database
 
 ### Frontend
 
-- **Blade Templates** - Templating engine
+- **Blade Templates** - Template engine
 - **Vanilla CSS** - Custom styling
-- **Font Awesome 6** - Icon library
-- **Chart.js** - Data visualization
+- **Font Awesome 6** - Library icon
+- **Chart.js** - Visualisasi data
 
-### Additional Libraries
+### Library Tambahan
 
-- **Maatwebsite/Laravel-Excel** - Export to Excel
-- **Laravel Tinker** - REPL for Laravel
+- **Maatwebsite/Laravel-Excel** - Export ke Excel
+- **Laravel Tinker** - REPL untuk Laravel
 
-## 📋 Requirements
+## 📋 Persyaratan Sistem
 
 - PHP >= 8.2
 - Composer
 - MySQL/MariaDB
-- Node.js & NPM (for asset compilation)
+- Node.js & NPM (untuk kompilasi asset)
 - Web Server (Apache/Nginx)
 
-## 🚀 Installation
+## 🚀 Panduan Instalasi
 
 ### 1. Clone Repository
 
@@ -90,24 +90,24 @@ cd web-coffe-shop
 ### 2. Install Dependencies
 
 ```bash
-# Install PHP dependencies
+# Install dependencies PHP
 composer install
 
-# Install Node dependencies
+# Install dependencies Node
 npm install
 ```
 
-### 3. Environment Setup
+### 3. Setup Environment
 
 ```bash
-# Copy environment file
+# Salin file environment
 cp .env.example .env
 
 # Generate application key
 php artisan key:generate
 ```
 
-### 4. Database Configuration
+### 4. Konfigurasi Database
 
 Edit file `.env` dan sesuaikan konfigurasi database:
 
@@ -115,34 +115,34 @@ Edit file `.env` dan sesuaikan konfigurasi database:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=coffe_dewek_web
+DB_DATABASE=coffe_shop
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### 5. Run Migrations & Seeders
+### 5. Jalankan Migrasi & Seeder
 
 ```bash
-# Create database tables
+# Buat tabel database
 php artisan migrate
 
-# Seed sample data
+# Isi data contoh
 php artisan db:seed
 ```
 
-### 6. Create Storage Link
+### 6. Buat Storage Link
 
 ```bash
 php artisan storage:link
 ```
 
-### 7. Build Assets (Optional)
+### 7. Build Asset (Opsional)
 
 ```bash
 npm run build
 ```
 
-### 8. Run Development Server
+### 8. Jalankan Development Server
 
 ```bash
 php artisan serve
@@ -150,19 +150,19 @@ php artisan serve
 
 Aplikasi akan berjalan di `http://127.0.0.1:8000`
 
-## 👤 Default User Credentials
+## 👤 Kredensial User Default
 
-### Owner Account
+### Akun Owner
 
 - **Email**: `owner@example.com`
 - **Password**: `password`
 
-### Employee Account
+### Akun Pegawai
 
 - **Email**: `pegawai@example.com`
 - **Password**: `password`
 
-## 📖 Usage Guide
+## 📖 Panduan Penggunaan
 
 ### Login
 
@@ -199,24 +199,24 @@ Aplikasi akan berjalan di `http://127.0.0.1:8000`
 2. Klik tombol "Export Excel"
 3. File akan terunduh otomatis
 
-## 📂 Project Structure
+## 📂 Struktur Proyek
 
 ```
 coffe_dewek_web/
 ├── app/
 │   ├── Http/
-│   │   └── Controllers/      # Application controllers
-│   ├── Models/               # Eloquent models
-│   └── Middleware/           # Custom middleware
+│   │   └── Controllers/      # Controller aplikasi
+│   ├── Models/               # Model Eloquent
+│   └── Middleware/           # Middleware kustom
 ├── database/
-│   ├── migrations/           # Database migrations
-│   └── seeders/              # Database seeders
+│   ├── migrations/           # Migrasi database
+│   └── seeders/              # Seeder database
 ├── public/
-│   ├── css/                  # Compiled CSS
-│   ├── js/                   # JavaScript files
-│   └── storage/              # Public storage (symlink)
+│   ├── css/                  # CSS yang dikompilasi
+│   ├── js/                   # File JavaScript
+│   └── storage/              # Storage publik (symlink)
 ├── resources/
-│   └── views/                # Blade templates
+│   └── views/                # Template Blade
 │       ├── auth/
 │       ├── dashboard/
 │       ├── products/
@@ -225,68 +225,68 @@ coffe_dewek_web/
 │       ├── users/
 │       └── layouts/
 └── routes/
-    └── web.php               # Web routes
+    └── web.php               # Route web
 ```
 
-## 🎨 Features Showcase
+## 🎨 Fitur Tampilan
 
-### Modern UI/UX
+### UI/UX Modern
 
-- Responsive design untuk semua device
-- Dark sidebar dengan gradient styling
-- Interactive hover effects
-- Smooth transitions dan animations
-- Clean dan minimalist interface
+- Desain responsif untuk semua perangkat
+- Sidebar gelap dengan styling gradient
+- Efek hover interaktif
+- Transisi dan animasi yang halus
+- Antarmuka yang bersih dan minimalis
 
-### Security Features
+### Fitur Keamanan
 
-- Role-based middleware
-- CSRF protection
-- Secure authentication
-- Backend validation untuk role-specific actions
+- Middleware berbasis role
+- Proteksi CSRF
+- Autentikasi aman
+- Validasi backend untuk aksi spesifik berdasarkan role
 
-### Performance
+### Performa
 
-- Optimized database queries
-- Efficient asset loading
-- Client-side search filtering
-- Smooth page transitions
+- Query database yang dioptimalkan
+- Loading asset yang efisien
+- Filter pencarian client-side
+- Transisi halaman yang halus
 
-## 🔒 Security
+## 🔒 Keamanan
 
-- **Authentication**: Laravel's built-in authentication system
-- **Authorization**: Role-based access control dengan middleware
-- **CSRF Protection**: Token validation pada semua form
-- **SQL Injection Prevention**: Eloquent ORM protection
-- **XSS Protection**: Blade template escaping
+- **Autentikasi**: Sistem autentikasi bawaan Laravel
+- **Otorisasi**: Kontrol akses berbasis role dengan middleware
+- **Proteksi CSRF**: Validasi token pada semua form
+- **Pencegahan SQL Injection**: Proteksi Eloquent ORM
+- **Proteksi XSS**: Template escaping Blade
 
-## 🤝 Contributing
+## 🤝 Kontribusi
 
-Contributions are welcome! Please follow these steps:
+Kontribusi sangat diterima! Silakan ikuti langkah berikut:
 
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork repository ini
+2. Buat branch baru (`git checkout -b fitur/fitur-keren`)
+3. Commit perubahan (`git commit -m 'Menambahkan fitur keren'`)
+4. Push ke branch (`git push origin fitur/fitur-keren`)
+5. Buka Pull Request
 
-## 📝 License
+## 📝 Lisensi
 
-This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Proyek ini adalah perangkat lunak open-source yang dilisensikan di bawah [lisensi MIT](https://opensource.org/licenses/MIT).
 
-## 👨‍💻 Developer
+## 👨‍💻 Pengembang
 
 **Fajril Maulid**
 
 - GitHub: [@FajrilMaulid](https://github.com/FajrilMaulid)
 
-## 🙏 Acknowledgments
+## 🙏 Ucapan Terima Kasih
 
 - Laravel Framework
 - Font Awesome Icons
-- Chart.js for data visualization
-- Maatwebsite/Laravel-Excel for export functionality
+- Chart.js untuk visualisasi data
+- Maatwebsite/Laravel-Excel untuk fungsionalitas export
 
 ---
 
-<p align="center">Made with ☕ and ❤️</p>
+<p align="center">Dibuat dengan ☕ dan ❤️</p>
