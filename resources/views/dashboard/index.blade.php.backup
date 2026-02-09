@@ -1,0 +1,278 @@
+@extends('layouts.master')
+
+@section('title', 'Dashboard')
+@section('page-title', 'Dashboard')
+
+@section('content')
+
+<!-- EMBEDDED CSS FIX: Mobile alignment - bypasses cache -->
+<style>
+@media (max-width: 768px) {
+    .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+    .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+        padding: 0 !important;
+    }
+
+    .chart-column,
+    .product-column {
+        padding: 0 !important;
+    }
+}
+</style>
+
+<!-- Statistics Cards -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon success"><i class="fas fa-money-bill-wave"></i></div>
+        <div class="stat-details">
+            <div class="stat-label">Penjualan Hari Ini</div>
+            <div class="stat-value">Rp {{ number_format($todaySales, 0, ',', '.') }}</div>
+        </div>
+    </div>
+
+    @if(auth()->user()->role === 'owner')
+    <div class="stat-card">
+        <div class="stat-icon primary"><i class="fas fa-calendar-week"></i></div>
+        <div class="stat-details">
+            <div class="stat-label">Penjualan Minggu Ini</div>
+            <div class="stat-value">Rp {{ number_format($weekSales, 0, ',', '.') }}</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon purple"><i class="fas fa-calendar-alt"></i></div>
+        <div class="stat-details">
+            <div class="stat-label">Penjualan Bulan Ini</div>
+            <div class="stat-value">Rp {{ number_format($monthSales, 0, ',', '.') }}</div>
+        </div>
+    </div>
+    @endif
+
+    <div class="stat-card">
+        <div class="stat-icon warning"><i class="fas fa-file-invoice"></i></div>
+        <div class="stat-details">
+            <div class="stat-label">Total Transaksi</div>
+            <div class="stat-value">{{ $totalTransactions }}</div>
+        </div>
+    </div>
+</div>
+
+@if(auth()->user()->role === 'owner')
+<!-- Charts Row -->
+<div class="row chart-row">
+    <div class="col-8 chart-column">
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3 class="chart-title">Grafik Penjualan (7 Hari Terakhir)</h3>
+            </div>
+            <div style="flex: 1; position: relative; min-height: 320px;">
+                <canvas id="salesChart" style="width: 100%; height: 100%;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4 product-column">
+        <div class="card product-card">
+            <div class="card-header" style="margin-bottom: 16px;">Produk Terlaris</div>
+            <div class="best-products-list" style="flex: 1; overflow-y: auto;">
+                @forelse($bestProducts as $product)
+                    <div class="product-item" style="display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #e2e8f0;">
+                        <span style="font-weight: 500; font-size: 14px;">{{ $product->name }}</span>
+                        <span class="badge badge-primary">{{ $product->total_sold }} terjual</span>
+                    </div>
+                @empty
+                    <p style="text-align: center; color: #999; padding: 40px 20px;">Belum ada data</p>
+                @endforelse
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Info Cards Row -->
+<div class="row" style="margin-bottom: 24px;">
+    <div class="col-4" style="padding: 0 12px;">
+        <div class="card" style="padding: 28px 24px; margin-bottom: 0; display: flex; align-items: center; gap: 24px;">
+            <div style="flex-shrink: 0;">
+                <i class="fas fa-box" style="font-size: 3.5rem; color: var(--primary);"></i>
+            </div>
+            <div style="flex: 1;">
+                <h1 style="font-size: 3rem; color: var(--primary); margin-bottom: 4px; font-weight: 700; line-height: 1;">{{ $totalProducts }}</h1>
+                <p style="color: #666; margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.3px;">Total Produk Aktif</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-4" style="padding: 0 12px;">
+        <div class="card" style="padding: 28px 24px; margin-bottom: 0; display: flex; align-items: center; gap: 24px;">
+            <div style="flex-shrink: 0;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 3.5rem; color: var(--danger);"></i>
+            </div>
+            <div style="flex: 1;">
+                <h1 style="font-size: 3rem; color: var(--danger); margin-bottom: 4px; font-weight: 700; line-height: 1;">{{ $lowStockProducts }}</h1>
+                <p style="color: #666; margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.3px;">Produk Stock Menipis</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-4" style="padding: 0 12px;">
+        <div class="card" style="padding: 28px 24px; margin-bottom: 0; display: flex; align-items: center; gap: 24px;">
+            <div style="flex-shrink: 0;">
+                <i class="fas fa-user-tie" style="font-size: 3.5rem; color: var(--success);"></i>
+            </div>
+            <div style="flex: 1;">
+                <h1 style="font-size: 3rem; color: var(--success); margin-bottom: 4px; font-weight: 700; line-height: 1;">{{ $totalEmployees }}</h1>
+                <p style="color: #666; margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.3px;">Total Pegawai</p>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+<!-- Recent Transactions -->
+<div class="card" style="margin-top: 24px;">
+    <div class="card-header">Transaksi Terbaru</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Kode Transaksi</th>
+                <th>Tanggal</th>
+                @if(auth()->user()->role === 'owner')
+                <th>Pegawai</th>
+                @endif
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($recentTransactions as $transaction)
+                <tr>
+                    <td><strong>{{ $transaction->transaction_code }}</strong></td>
+                    <td>{{ $transaction->created_at->format('d/m/Y H:i') }}</td>
+                    @if(auth()->user()->role === 'owner')
+                    <td>{{ $transaction->user->name }}</td>
+                    @endif
+                    <td>Rp {{ number_format($transaction->total_amount, 0, ',', '.') }}</td>
+                    <td>
+                        @if($transaction->status === 'completed')
+                            <span class="badge badge-success">Selesai</span>
+                        @elseif($transaction->status === 'pending')
+                            <span class="badge badge-warning">Pending</span>
+                        @else
+                            <span class="badge badge-danger">Dibatalkan</span>
+                        @endif
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="{{ auth()->user()->role === 'owner' ? '5' : '4' }}" style="text-align: center; padding: 40px; color: #999;">
+                        Belum ada transaksi
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+@endsection
+
+@if(auth()->user()->role === 'owner')
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Sales Chart
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    const salesData = @json($salesChart);
+
+    const salesChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: salesData.map(d => d.date),
+            datasets: [{
+                label: 'Penjualan (Rp)',
+                data: salesData.map(d => d.sales),
+                borderColor: '#6F4E37',
+                backgroundColor: 'rgba(111, 78, 55, 0.1)',
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#6F4E37',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 750,
+                easing: 'easeInOutQuart'
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'Rp ' + value.toLocaleString('id-ID');
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // CRITICAL: ResizeObserver to force chart resize on ANY container change
+    const chartCanvas = document.getElementById('salesChart');
+    const chartContainer = chartCanvas.closest('.chart-card');
+
+    // ResizeObserver untuk memantau perubahan ukuran container
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            // Force chart to resize when container size changes
+            if (salesChart) {
+                salesChart.resize();
+                salesChart.update('none'); // Update without animation for smooth feel
+            }
+        }
+    });
+
+    // Observe the chart container
+    if (chartContainer) {
+        resizeObserver.observe(chartContainer);
+    }
+
+    // Also observe the canvas itself
+    if (chartCanvas) {
+        resizeObserver.observe(chartCanvas);
+    }
+
+    // Listen for sidebar toggle to resize chart
+    const sidebarToggleBtn = document.getElementById('sidebarToggle');
+    if (sidebarToggleBtn) {
+        sidebarToggleBtn.addEventListener('click', function() {
+            // Wait for CSS transition to complete, then resize chart
+            setTimeout(() => {
+                if (salesChart) {
+                    salesChart.resize();
+                    salesChart.update('resize');
+                }
+            }, 450); // Slightly longer than CSS transition (400ms)
+        });
+    }
+
+    // Also listen to window resize
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            if (salesChart) {
+                salesChart.resize();
+                salesChart.update('none');
+            }
+        }, 100);
+    });
+</script>
+@endpush
+@endif

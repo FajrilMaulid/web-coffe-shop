@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Dashboard') - Coffee Shop Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=4.0.{{ time() }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}?v=4.0.{{ time() }}">
+    <link rel="stylesheet" href="{{ asset('css/utilities.css') }}?v=4.0.{{ time() }}">
+    @stack('styles')
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo" style="padding: 32px 24px; margin-bottom: 24px; text-align: center; display: flex; align-items: center; justify-content: center;">
+            <div>
+                <h3 style="margin: 0; line-height: 1.2;">Coffee Admin</h3>
+                <small style="display: block; margin-top: 4px;">SISTEM ADMINISTRASI</small>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li class="menu-item">
+                <a href="{{ route('dashboard') }}" class="menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="{{ route('products.index') }}" class="menu-link {{ request()->routeIs('products.*') ? 'active' : '' }}">
+                    <i class="fas fa-mug-hot"></i>
+                    <span>Produk</span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="{{ route('transactions.index') }}" class="menu-link {{ request()->routeIs('transactions.*') ? 'active' : '' }}">
+                    <i class="fas fa-receipt"></i>
+                    <span>Transaksi</span>
+                </a>
+            </li>
+
+            @if(auth()->user()->role === 'owner')
+            <li class="menu-item">
+                <a href="{{ route('categories.index') }}" class="menu-link {{ request()->routeIs('categories.*') ? 'active' : '' }}">
+                    <i class="fas fa-tag"></i>
+                    <span>Kategori</span>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="{{ route('users.index') }}" class="menu-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <i class="fas fa-users"></i>
+                    <span>Pegawai</span>
+                </a>
+            </li>
+            @endif
+
+            <li class="menu-item" style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="menu-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Keluar</span>
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Navbar -->
+        <nav class="top-navbar">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <button id="sidebarToggle" style="background: none; border: none; cursor: pointer; padding: 8px; display: flex; align-items: center; color: var(--dark);">
+                    <i class="fas fa-bars" style="font-size: 20px;"></i>
+                </button>
+                <div class="page-title">
+                    <h2>@yield('page-title', 'Dashboard')</h2>
+                </div>
+            </div>
+
+            <div class="user-menu">
+                <div class="user-info">
+                    <div class="user-name">{{ auth()->user()->name }}</div>
+                    <div class="user-role">{{ auth()->user()->role }}</div>
+                </div>
+                <div class="user-avatar">
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    <strong>✅</strong>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    <strong>⚠️</strong>
+                    <span>{{ session('error') }}</span>
+                </div>
+            @endif
+
+            @yield('content')
+        </div>
+    </main>
+
+
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script>
+        // Sidebar Toggle Functionality
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const topNavbar = document.querySelector('.top-navbar');
+
+        // Check if mobile
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+
+        // Initialize sidebar state based on localStorage (desktop only)
+        if (!isMobile()) {
+            const sidebarState = localStorage.getItem('sidebarCollapsed');
+            if (sidebarState === 'true') {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('expanded');
+                if (topNavbar) topNavbar.classList.add('expanded');
+            }
+        }
+
+        // Toggle sidebar
+        sidebarToggle.addEventListener('click', function() {
+            const isCurrentlyCollapsed = sidebar.classList.contains('collapsed');
+
+            if (isMobile()) {
+                // Mobile: toggle active class
+                sidebar.classList.toggle('active');
+                sidebarOverlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+            } else {
+                // Desktop: toggle collapsed class
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                if (topNavbar) topNavbar.classList.toggle('expanded');
+
+                // Save state
+                const isCollapsed = sidebar.classList.contains('collapsed');
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+            }
+
+            // Trigger resize for charts
+            setTimeout(() => {
+                window.dispatchEvent(new Event('resize'));
+            }, 450);
+        });
+
+        // Close sidebar on overlay click (mobile)
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                sidebarOverlay.style.display = 'none';
+            });
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (!isMobile()) {
+                // Desktop: hide overlay, remove active class
+                sidebarOverlay.style.display = 'none';
+                sidebar.classList.remove('active');
+            } else {
+                // Mobile: ensure collapsed state is removed
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('expanded');
+                if (topNavbar) topNavbar.classList.remove('expanded');
+            }
+        });
+    </script>
+    @stack('scripts')
+</body>
+</html>
