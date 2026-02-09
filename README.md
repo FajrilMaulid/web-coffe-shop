@@ -1,59 +1,292 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ☕ Coffee Shop Admin System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem administrasi modern untuk pengelolaan coffee shop yang dibangun dengan Laravel 12. Aplikasi ini menyediakan antarmuka yang intuitif untuk mengelola produk, transaksi, kategori, dan pegawai dengan sistem role-based access control.
 
-## About Laravel
+## ✨ Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 🎯 Dashboard Interaktif
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Statistik Real-time**: Penjualan harian, mingguan, dan bulanan
+- **Grafik Penjualan**: Visualisasi data 7 hari terakhir
+- **Product Tracking**: Monitor produk terlaris
+- **Stok Alert**: Notifikasi produk dengan stok menipis
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 👥 Role-Based Access Control
 
-## Learning Laravel
+- **Owner**: Akses penuh ke semua fitur
+    - CRUD produk, kategori, dan pegawai
+    - Lihat dan kelola transaksi
+    - Akses laporan penjualan lengkap
+- **Pegawai**: Akses terbatas
+    - Edit stok dan status produk
+    - Buat dan lihat transaksi
+    - Lihat dashboard
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 📦 Manajemen Produk
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Tambah/edit/hapus produk
+- Upload gambar produk
+- Manajemen kategori
+- Status aktif/non-aktif
+- Filter dan pencarian real-time
+- Edit terbatas untuk pegawai (hanya stok & status)
 
-## Laravel Sponsors
+### 💰 Manajemen Transaksi
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Point of Sale (POS) interface
+- Keranjang belanja interaktif
+- Export transaksi ke Excel
+- Riwayat transaksi lengkap
+- Filter berdasarkan tanggal
 
-### Premium Partners
+### 🏷️ Manajemen Kategori (Owner Only)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- CRUD kategori produk
+- Deskripsi detail kategori
 
-## Contributing
+### 👨‍💼 Manajemen Pegawai (Owner Only)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Tambah/edit/hapus pegawai
+- Informasi kontak lengkap
+- Manajemen role
 
-## Code of Conduct
+## 🛠️ Tech Stack
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Backend
 
-## Security Vulnerabilities
+- **Laravel 12** - PHP Framework
+- **PHP 8.2+** - Server-side scripting
+- **MySQL** - Database management
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Frontend
 
-## License
+- **Blade Templates** - Templating engine
+- **Vanilla CSS** - Custom styling
+- **Font Awesome 6** - Icon library
+- **Chart.js** - Data visualization
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Additional Libraries
+
+- **Maatwebsite/Laravel-Excel** - Export to Excel
+- **Laravel Tinker** - REPL for Laravel
+
+## 📋 Requirements
+
+- PHP >= 8.2
+- Composer
+- MySQL/MariaDB
+- Node.js & NPM (for asset compilation)
+- Web Server (Apache/Nginx)
+
+## 🚀 Installation
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/FajrilMaulid/web-coffe-shop.git
+cd web-coffe-shop
+```
+
+### 2. Install Dependencies
+
+```bash
+# Install PHP dependencies
+composer install
+
+# Install Node dependencies
+npm install
+```
+
+### 3. Environment Setup
+
+```bash
+# Copy environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+```
+
+### 4. Database Configuration
+
+Edit file `.env` dan sesuaikan konfigurasi database:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=coffe_dewek_web
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 5. Run Migrations & Seeders
+
+```bash
+# Create database tables
+php artisan migrate
+
+# Seed sample data
+php artisan db:seed
+```
+
+### 6. Create Storage Link
+
+```bash
+php artisan storage:link
+```
+
+### 7. Build Assets (Optional)
+
+```bash
+npm run build
+```
+
+### 8. Run Development Server
+
+```bash
+php artisan serve
+```
+
+Aplikasi akan berjalan di `http://127.0.0.1:8000`
+
+## 👤 Default User Credentials
+
+### Owner Account
+
+- **Email**: `owner@example.com`
+- **Password**: `password`
+
+### Employee Account
+
+- **Email**: `pegawai@example.com`
+- **Password**: `password`
+
+## 📖 Usage Guide
+
+### Login
+
+1. Akses aplikasi melalui browser
+2. Masukkan email dan password
+3. Klik tombol "Masuk"
+
+### Manajemen Produk (Owner)
+
+1. Klik menu "Produk" di sidebar
+2. Klik tombol "+ Tambah Produk"
+3. Isi form produk (kategori, nama, deskripsi, harga, stok, gambar)
+4. Klik "Simpan"
+
+### Edit Produk (Pegawai)
+
+1. Klik menu "Produk"
+2. Klik tombol "Edit" pada produk yang ingin diubah
+3. Ubah nilai stok atau status produk
+4. Klik "Update"
+
+### Buat Transaksi
+
+1. Klik menu "Transaksi"
+2. Klik tombol "+ Transaksi Baru"
+3. Pilih produk dari daftar
+4. Atur jumlah item
+5. Review total pembayaran
+6. Klik "Proses Transaksi"
+
+### Export Laporan
+
+1. Klik menu "Transaksi"
+2. Klik tombol "Export Excel"
+3. File akan terunduh otomatis
+
+## 📂 Project Structure
+
+```
+coffe_dewek_web/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/      # Application controllers
+│   ├── Models/               # Eloquent models
+│   └── Middleware/           # Custom middleware
+├── database/
+│   ├── migrations/           # Database migrations
+│   └── seeders/              # Database seeders
+├── public/
+│   ├── css/                  # Compiled CSS
+│   ├── js/                   # JavaScript files
+│   └── storage/              # Public storage (symlink)
+├── resources/
+│   └── views/                # Blade templates
+│       ├── auth/
+│       ├── dashboard/
+│       ├── products/
+│       ├── transactions/
+│       ├── categories/
+│       ├── users/
+│       └── layouts/
+└── routes/
+    └── web.php               # Web routes
+```
+
+## 🎨 Features Showcase
+
+### Modern UI/UX
+
+- Responsive design untuk semua device
+- Dark sidebar dengan gradient styling
+- Interactive hover effects
+- Smooth transitions dan animations
+- Clean dan minimalist interface
+
+### Security Features
+
+- Role-based middleware
+- CSRF protection
+- Secure authentication
+- Backend validation untuk role-specific actions
+
+### Performance
+
+- Optimized database queries
+- Efficient asset loading
+- Client-side search filtering
+- Smooth page transitions
+
+## 🔒 Security
+
+- **Authentication**: Laravel's built-in authentication system
+- **Authorization**: Role-based access control dengan middleware
+- **CSRF Protection**: Token validation pada semua form
+- **SQL Injection Prevention**: Eloquent ORM protection
+- **XSS Protection**: Blade template escaping
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 👨‍💻 Developer
+
+**Fajril Maulid**
+
+- GitHub: [@FajrilMaulid](https://github.com/FajrilMaulid)
+
+## 🙏 Acknowledgments
+
+- Laravel Framework
+- Font Awesome Icons
+- Chart.js for data visualization
+- Maatwebsite/Laravel-Excel for export functionality
+
+---
+
+<p align="center">Made with ☕ and ❤️</p>
